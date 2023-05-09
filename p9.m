@@ -83,3 +83,154 @@ plot(f, abs(X));
 xlabel('Freqüència (Hz)');
 ylabel('Magnitud');
 title('Espectre del senyal amb soroll gaussià');
+
+
+
+%% Activitat 2
+
+%% a)
+% Señal original
+n = [0:31];
+x = sin(2*pi*4.5*n/32) + sin(2*pi*6.5*n/32);
+
+% Aplicar ventana Hanning y Blackmann
+xh = x.*hanning(32)';
+xb = x.*blackman(32)';
+
+% Calcular la DFT
+X = fft(x);
+Xh = fft(xh);
+Xb = fft(xb);
+
+% Espectro en dB
+X_dB = 20*log10(abs(X)/max(abs(X)));
+Xh_dB = 20*log10(abs(Xh)/max(abs(Xh)));
+Xb_dB = 20*log10(abs(Xb)/max(abs(Xb)));
+
+% Visualizar el espectro
+f = [0:length(X)-1]/length(X);
+figure;
+plot(f, X_dB, 'b', f, Xh_dB, 'r', f, Xb_dB, 'g');
+xlabel('Frecuencia normalizada');
+ylabel('Amplitud (dB)');
+legend('Original', 'Hanning', 'Blackmann');
+ylim([-60 0]);
+
+% Zero-padding
+N = 512;
+xn = [x, zeros(1, N-length(x))];
+xhn = [xh, zeros(1, N-length(xh))];
+xbn = [xb, zeros(1, N-length(xb))];
+
+% Calcular la DFT con zero-padding
+Xn = fft(xn);
+Xhn = fft(xhn);
+Xbn = fft(xbn);
+
+% Espectro en dB
+Xn_dB = 20*log10(abs(Xn)/max(abs(Xn)));
+Xhn_dB = 20*log10(abs(Xhn)/max(abs(Xhn)));
+Xbn_dB = 20*log10(abs(Xbn)/max(abs(Xbn)));
+
+% Visualizar el espectro con zero-padding
+fn = [0:length(Xn)-1]/length(Xn);
+figure;
+plot(fn, Xn_dB, 'b', fn, Xhn_dB, 'r', fn, Xbn_dB, 'g');
+xlabel('Frecuencia normalizada');
+ylabel('Amplitud (dB)');
+legend('Original', 'Hanning', 'Blackmann');
+ylim([-60 0]);
+
+%% b) Efecte sobre el rang dinàmic
+
+% Senal original
+n = [0:63];
+x = sin(2*pi*10.1*n/64) + 0.001*cos(2*pi*15.2*n/64) + 0.001*sin(2*pi*20.3*n/64) + 0.001*cos(2*pi*25.2*n/64);
+
+% Aplicar ventana rectangular
+xr = x.*rectwin(64)';
+
+% Aplicar ventana Hanning
+xh = x.*hanning(64)';
+
+% Aplicar ventana Blackmann
+xb = x.*blackman(64)';
+
+% Calcular la DFT
+X = fft(x);
+Xr = fft(xr);
+Xh = fft(xh);
+Xb = fft(xb);
+
+% Magnitud del espectro
+X_mag = abs(X);
+Xr_mag = abs(Xr);
+Xh_mag = abs(Xh);
+Xb_mag = abs(Xb);
+
+% Espectro en dB
+X_dB = 20*log10(X_mag/max(X_mag));
+Xr_dB = 20*log10(Xr_mag/max(Xr_mag));
+Xh_dB = 20*log10(Xh_mag/max(Xh_mag));
+Xb_dB = 20*log10(Xb_mag/max(Xb_mag));
+
+% Visualizar el espectro
+f = [0:length(X)-1]/length(X);
+figure;
+plot(f, X_dB, 'b', f, Xr_dB, 'r', f, Xh_dB, 'g', f, Xb_dB, 'k');
+xlabel('Frecuencia normalizada');
+ylabel('Amplitud (dB)');
+legend('Original', 'Rectangular', 'Hanning', 'Blackmann');
+ylim([-80 0]);
+
+%% Zero Padding
+% Senal original
+n = [0:63];
+x = sin(2*pi*10.1*n/64) + 0.001*cos(2*pi*15.2*n/64) + 0.001*sin(2*pi*20.3*n/64) + 0.001*cos(2*pi*25.2*n/64);
+
+% Aplicar ventana rectangular
+xr = x.*rectwin(64)';
+
+% Aplicar ventana Hanning
+xh = x.*hanning(64)';
+
+% Aplicar ventana Blackmann
+xb = x.*blackman(64)';
+
+% Calcular la DFT con zero-padding
+N = 512;
+X = fft(x, N);
+Xr = fft(xr, N);
+Xh = fft(xh, N);
+Xb = fft(xb, N);
+
+% Magnitud del espectro con zero-padding
+X_mag = abs(X);
+Xr_mag = abs(Xr);
+Xh_mag = abs(Xh);
+Xb_mag = abs(Xb);
+
+% Espectro en dB con zero-padding
+X_dB = 20*log10(X_mag/max(X_mag));
+Xr_dB = 20*log10(Xr_mag/max(Xr_mag));
+Xh_dB = 20*log10(Xh_mag/max(Xh_mag));
+Xb_dB = 20*log10(Xb_mag/max(Xb_mag));
+
+% Visualizar el espectro con zero-padding
+f = [0:N-1]/N;
+figure;
+plot(f, X_dB, 'b', f, Xr_dB, 'r', f, Xh_dB, 'g', f, Xb_dB, 'k');
+xlabel('Frecuencia normalizada');
+ylabel('Amplitud (dB)');
+legend('Original', 'Rectangular', 'Hanning', 'Blackmann');
+ylim([-80 0]);
+
+
+
+
+
+
+
+
+
+
