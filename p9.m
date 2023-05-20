@@ -65,7 +65,7 @@ noise = sigma*randn(size(x));
 x = x + noise;
 
 % Mostrar senyal
-figure(1)
+figure(3)
 plot(t, x);
 xlabel('Temps (s)');
 ylabel('Amplitud');
@@ -78,7 +78,7 @@ X = fft(x);
 f = (0:N-1) * Fs / N;
 
 % Dibuixar el espectre
-figure(2)
+figure(4)
 plot(f, abs(X));
 xlabel('Freqüència (Hz)');
 ylabel('Magnitud');
@@ -109,7 +109,7 @@ Xb_dB = 20*log10(abs(Xb)/max(abs(Xb)));
 
 % Visualizar el espectro
 f = [0:length(X)-1]/length(X);
-figure;
+figure(5)
 plot(f, X_dB, 'b', f, Xh_dB, 'r', f, Xb_dB, 'g');
 xlabel('Frecuencia normalizada');
 ylabel('Amplitud (dB)');
@@ -134,7 +134,7 @@ Xbn_dB = 20*log10(abs(Xbn)/max(abs(Xbn)));
 
 % Visualizar el espectro con zero-padding
 fn = [0:length(Xn)-1]/length(Xn);
-figure;
+figure(6)
 plot(fn, Xn_dB, 'b', fn, Xhn_dB, 'r', fn, Xbn_dB, 'g');
 xlabel('Frecuencia normalizada');
 ylabel('Amplitud (dB)');
@@ -176,7 +176,7 @@ Xb_dB = 20*log10(Xb_mag/max(Xb_mag));
 
 % Visualizar el espectro
 f = [0:length(X)-1]/length(X);
-figure;
+figure(7)
 plot(f, X_dB, 'b', f, Xr_dB, 'r', f, Xh_dB, 'g', f, Xb_dB, 'k');
 xlabel('Frecuencia normalizada');
 ylabel('Amplitud (dB)');
@@ -218,7 +218,7 @@ Xb_dB = 20*log10(Xb_mag/max(Xb_mag));
 
 % Visualizar el espectro con zero-padding
 f = [0:N-1]/N;
-figure;
+figure(8)
 plot(f, X_dB, 'b', f, Xr_dB, 'r', f, Xh_dB, 'g', f, Xb_dB, 'k');
 xlabel('Frecuencia normalizada');
 ylabel('Amplitud (dB)');
